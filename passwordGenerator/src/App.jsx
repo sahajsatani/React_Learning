@@ -39,12 +39,25 @@ function App() {
     setPassword(pass);
   }, [length, number, character, setPassword]);
 
+  //run on every render
+  // useEffect(() => {
+  //   passwordGenerator();
+  // })
+
+  //run only on first render
+  // useEffect(() => {
+  //   passwordGenerator();
+  // },[])
+
+  //run only on certain value change
   useEffect(() => {
     passwordGenerator();
   },[length, number, character,passwordGenerator])
 
   const CopyPassword = useCallback(() => {
     passwordRef.current?.select();
+    passwordRef.current?.setSelectionRange(0,20);
+
     // window.nevigator.clipboard.writeText(password);
   },[password]);
   return (
