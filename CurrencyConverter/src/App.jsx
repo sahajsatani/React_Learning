@@ -3,8 +3,8 @@ import currency from "./hooks/currency";
 import {InputBox} from "./component";
 
 function App() {
-  const [Amount, setAmount] = useState(0);
-  const [convertedAmount, setConvertedAmount] = useState(0);
+  const [Amount, setAmount] = useState();
+  const [convertedAmount, setConvertedAmount] = useState();
   const [from, setFrom] = useState("INR");
   const [to, setTo] = useState("USD");
   
@@ -15,23 +15,25 @@ function App() {
 
   const convert = () => {
     setConvertedAmount(Amount * currencyInfo[to]);
-  };
+  }
+
   const swap = () => {
     setFrom(to);
-    setTo(temp);
+    setTo(from);
     setConvertedAmount(Amount);
     setAmount(convertedAmount);
-  };
+  }
   return (
     <>
       <div
         className="w-full h-screen flex flex-wrap justify-center items-center bg-cover bg-no-repeat"
         style={{
-          backgroundImage: `url('CurrencyConverter/src/component/index.js')`,
+          backgroundImage: `url('src/assets/image.png')`,
         }}
       >
         <div className="w-full">
           <div className="w-full max-w-md mx-auto border border-gray-60 rounded-lg p-5 backdrop-blur-sm bg-white/30">
+            <h1 className="text-black text-2xl mb-3 p-3">Currency Converter</h1>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -44,7 +46,7 @@ function App() {
                   amount={Amount}
                   currencyOption={option}
                   onAmountChange={(amount) => setAmount(amount)}
-                  onCurrencyChange={(currency) => setAmount(currency)}
+                  onCurrencyChange={(currency) => setFrom(currency)}
                   selectCurrency={from}
                 />
               </div>
@@ -61,8 +63,9 @@ function App() {
                 <InputBox
                   label="To"
                   amount={convertedAmount}
-                  currencyOption={option}
                   onCurrencyChange={(currency) => setTo(currency)}
+                  currencyOption={option}
+                  currencyDisable={false}
                   selectCurrency={to}
                   amountDisable={true}
                 />
